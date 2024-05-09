@@ -7,4 +7,3 @@ const positionLong = 12;
 
 const distance = Math.sqrt((addressLat - positionLat) ** 2 + (addressLong - positionLong) ** 2);
 console.log(`Из точки А в точку B нам потребуется преодолеть расстояние ${distance}`);
-
