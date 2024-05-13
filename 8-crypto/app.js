@@ -27,3 +27,4 @@ const checkPassword = (changedPassword, password) => {
 }
 
 console.log(checkPassword('вирП!те', 'Привет!'));
+
