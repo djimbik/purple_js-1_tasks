@@ -14,16 +14,8 @@ const encryptPassword = (password) => {
 
 console.log(encryptPassword('Привет!'));
 
-const checkPassword = (changedPassword, password) => {
-    const reversed = changedPassword.split('').reverse().join('');
-
-    const lastFour = reversed.slice(-4);
-    const firstThree = reversed.slice(0, 3);
-    const middle = reversed.slice(3, -4);
-
-    const original = lastFour + middle + firstThree;
-
-    return original === password;
+const checkPassword = (hashedPassword, password) => {
+    return encryptPassword(hashedPassword) === password;
 }
 
 console.log(checkPassword('вирП!те', 'Привет!'));
