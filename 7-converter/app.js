@@ -9,32 +9,35 @@ const convertCurrency = (sum, currencySell, currencyBuy) => {
         return sum;
     }
 
-    if (currencySell === 'EUR') {
-        if (currencyBuy === 'USD') {
-            return sum / usdToEurRate;
-        }
-        if (currencyBuy === 'RUB') {
-            return sum * rubToEurRate;
-        }
+    switch (currencySell) {
+        case 'EUR':
+            switch (currencyBuy) {
+                case 'USD':
+                    return sum / usdToEurRate;
+                case 'RUB':
+                    return sum * rubToEurRate;
+                default:
+                    return 0;
+            }
+        case 'USD':
+            switch (currencyBuy) {
+                case 'EUR':
+                    return sum * usdToEurRate;
+                case 'RUB':
+                    return sum * rubToUsdRate;
+                default:
+                    return 0;
+            }
+        case 'RUB':
+            switch (currencyBuy) {
+                case 'EUR':
+                    return sum / rubToEurRate;
+                case 'USD':
+                    return sum / rubToUsdRate;
+                default:
+                    return 0;
+            }
+        default:
+            return 0
     }
-
-    if (currencySell === 'USD') {
-        if (currencyBuy === 'EUR') {
-            return sum * usdToEurRate;
-        }
-        if (currencyBuy === 'RUB') {
-            return sum * rubToUsdRate;
-        }
-    }
-
-    if (currencySell === 'RUB') {
-        if (currencyBuy === 'EUR') {
-            return sum / rubToEurRate;
-        }
-        if (currencyBuy === 'USD') {
-            return sum / rubToUsdRate;
-        }
-    }
-
-    return 0
 }
