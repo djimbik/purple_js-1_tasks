@@ -1,5 +1,5 @@
 // HW - 15
-
+let lastId = 1;
 
 const ToDoList = {
     tasks: [
@@ -10,43 +10,50 @@ const ToDoList = {
         },
     ],
 
-    addTask(title, priority) {
-        const newId = (Math.max(...this.tasks.map(task => task.id)) || 0) + 1;
+    addTask(data) {
+        if (!data) {
+            return this
+        }
 
-        this.tasks.push({
-            title,
-            priority,
-            id: newId,
-        });
+        data.id = ++lastId;
+        this.tasks.push(data);
+
+        return this
     },
 
     deleteTask(id) {
+        const isExitsts = this.tasks.some(({id: taskId}) => taskId === id);
+        if (!isExitsts) {
+            return `Задача c ${id} не найдена`;
+        }
+
         this.tasks = this.tasks.filter(task => task.id !== id);
+        return this;
     },
 
-    refreshTask(id, newTitle = null, newPriority = null) {
-        this.tasks = this.tasks.map(task => {
-            if (task.id === id) {
-                return {
-                    ...task,
-                    title: newTitle === null ? task.title : newTitle,
-                    priority: newPriority === null ? task.priority : newPriority,
-                }
-            }
-            return task;
-        })
+    refreshTask(id, newData) {
+        const taskIndex = this.tasks.findIndex(({id: taskId}) => taskId === id);
+
+        if (taskIndex === -1) {
+            return this
+        }
+
+        this.tasks[taskIndex] = {...this.tasks[taskIndex], ...newData};
+
+        return this;
     },
 
     sortTasks() {
         this.tasks.sort((a, b) => a.priority - b.priority);
+        return this;
     }
 }
 
-ToDoList.addTask('Решить 5 задач по JS', 1);
-ToDoList.addTask('Сходить в магазин за едой', 3);
-ToDoList.addTask('Сходить на тренировку', 2);
-ToDoList.addTask('Погулять по лесу', 4);
+ToDoList.addTask({title: 'Решить 5 задач по JS', priority: 1});
+ToDoList.addTask({title: 'Сходить в магазин за едой', priority: 3});
+ToDoList.addTask({title: 'Сходить на тренировку', priority: 2});
+ToDoList.addTask({title: 'Погулять по лесу', priority: 4});
 ToDoList.deleteTask(3);
-ToDoList.refreshTask(4, null, 9);
+ToDoList.refreshTask(4, {title: 'Сходить на тренировку', priority: 9});
 ToDoList.sortTasks();
 console.log(ToDoList.tasks)
