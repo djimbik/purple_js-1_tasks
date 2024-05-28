@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS</title>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+<main class="main">
+    <div class="inputs-block">
+        <label class="inputs-block__label">
+            Число 1
+            <input class="first-num" type="text" placeholder="Введите число 1">
+        </label>
+        <label class="inputs-block__label">
+            Число 2
+            <input class="second-num" type="text" placeholder="Введите число 2">
+        </label>
+        <p class="inputs-block__error inputs-block__error_inactive">Можно вводить только числа</p>
+    </div>
+    <div class="buttons__block">
+        <button class="button button__plus" onclick="addition(event)">+</button>
+        <button class="button button__minus" onclick="subtraction(event)">-</button>
+        <button class="button button__divide" onclick="division(event)">/</button>
+        <button class="button button__multiply" onclick="multiplication(event)">*</button>
+    </div>
+    <div class="result">
+        <h2 class="result__header">Результат:</h2>
+        <p class="result__text"></p>
+    </div>
+</main>
+
+</body>
+<script src="./app.js"></script>
+</html>
