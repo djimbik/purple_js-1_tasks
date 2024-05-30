@@ -1,17 +1,20 @@
 // HW - 17
 
-const firstNum = document.querySelector('.first-num');
-const secondNum = document.querySelector('.second-num');
-const resultText = document.querySelector('.result__text');
-const errorBlock = document.querySelector('.inputs-block__error');
+/* page */
+const page = {
+    firstNum: document.querySelector('.first-num'),
+    secondNum: document.querySelector('.second-num'),
+    resultText: document.querySelector('.result__text'),
+    errorBlock: document.querySelector('.inputs-block__error'),
+}
 
 const showError = (target) => {
-    errorBlock.classList.remove('inputs-block__error_inactive');
+    page.errorBlock.classList.remove('inputs-block__error_inactive');
     target.value = '';
 };
 
 const hideError = () => {
-    errorBlock.classList.add('inputs-block__error_inactive');
+    page.errorBlock.classList.add('inputs-block__error_inactive');
 };
 
 const convertToNum = (input) => {
@@ -45,8 +48,8 @@ const validateInput = (event) => {
     hideError();
 }
 
-firstNum.addEventListener('input', validateInput);
-secondNum.addEventListener('input', validateInput);
+page.firstNum.addEventListener('input', validateInput);
+page.secondNum.addEventListener('input', validateInput);
 
 const validateFinalInput = (inputValue) => {
     const normalizedInput = inputValue.replace(',', '.');
@@ -60,9 +63,9 @@ const validateFinalInput = (inputValue) => {
 };
 
 const calculateResult = (operation) => {
-    if (!validateFinalInput(firstNum.value) || !validateFinalInput(secondNum.value)) {
-        showError(resultText);
-        resultText.textContent = 'Неверное значение введено в поле ввода числа';
+    if (!validateFinalInput(page.firstNum.value) || !validateFinalInput(page.secondNum.value)) {
+        showError(page.resultText);
+        page.resultText.textContent = 'Неверное значение введено в поле ввода числа';
         return;
     }
 
@@ -70,21 +73,21 @@ const calculateResult = (operation) => {
 
     switch (operation) {
         case 'addition':
-            finalResult = convertToNum(firstNum) + convertToNum(secondNum);
+            finalResult = convertToNum(page.firstNum) + convertToNum(page.secondNum);
             break;
         case 'subtraction':
-            finalResult = convertToNum(firstNum) - convertToNum(secondNum);
+            finalResult = convertToNum(page.firstNum) - convertToNum(page.secondNum);
             break;
         case 'multiplication':
-            finalResult = convertToNum(firstNum) * convertToNum(secondNum);
+            finalResult = convertToNum(page.firstNum) * convertToNum(page.secondNum);
             break;
         case 'division':
-            finalResult = convertToNum(firstNum) / convertToNum(secondNum);
+            finalResult = convertToNum(page.firstNum) / convertToNum(page.secondNum);
             break;
         default:
             return;
     }
-    resultText.textContent = finalResult;
+    page.resultText.textContent = finalResult;
 }
 
 const addition = () => calculateResult('addition');
