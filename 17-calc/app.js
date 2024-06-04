@@ -6,6 +6,7 @@ const page = {
     secondNum: document.querySelector('.second-num'),
     resultText: document.querySelector('.result__text'),
     errorBlock: document.querySelector('.inputs-block__error'),
+    buttonsBlock: document.querySelector('.buttons__block'),
 }
 
 const showError = (target) => {
@@ -72,16 +73,16 @@ const calculateResult = (operation) => {
     let finalResult;
 
     switch (operation) {
-        case 'addition':
+        case '+':
             finalResult = convertToNum(page.firstNum) + convertToNum(page.secondNum);
             break;
-        case 'subtraction':
+        case '-':
             finalResult = convertToNum(page.firstNum) - convertToNum(page.secondNum);
             break;
-        case 'multiplication':
+        case '*':
             finalResult = convertToNum(page.firstNum) * convertToNum(page.secondNum);
             break;
-        case 'division':
+        case '/':
             finalResult = convertToNum(page.firstNum) / convertToNum(page.secondNum);
             break;
         default:
@@ -90,7 +91,11 @@ const calculateResult = (operation) => {
     page.resultText.textContent = finalResult;
 }
 
-const addition = () => calculateResult('addition');
-const subtraction = () => calculateResult('subtraction');
-const multiplication = () => calculateResult('multiplication');
-const division = () => calculateResult('division');
+page.buttonsBlock.addEventListener('click', (event) => {
+    const button = event.target.closest('.button');
+
+    if (button) {
+        const operation = button.innerText;
+        calculateResult(operation);
+    }
+})
