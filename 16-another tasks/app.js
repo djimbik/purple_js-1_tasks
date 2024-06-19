@@ -1,19 +1,22 @@
 // HW - 16
 let lastId = 1;
 
-const ToDoList = {
+const toDoList = {
     tasks: [
         {
-            name: 'Помыть посуду',
+            title: 'Помыть посуду',
             id: 1,
-            description: 'Описание',
-            order: 0,
+            priority: 1,
         },
     ],
 
     addTask(data) {
         if (!data) {
             return this
+        }
+
+        if (!this.tasks) {
+            this.tasks = [];
         }
 
         data.id = ++lastId;
@@ -23,8 +26,8 @@ const ToDoList = {
     },
 
     deleteTask(id) {
-        const isExitsts = this.tasks.some(({id: taskId}) => taskId === id);
-        if (!isExitsts) {
+        const isExists = this.tasks.some(({id: taskId}) => taskId === id);
+        if (!isExists) {
             return `Задача c ${id} не найдена`;
         }
 
@@ -50,11 +53,22 @@ const ToDoList = {
     }
 }
 
-ToDoList.addTask({title: 'Решить 5 задач по JS', priority: 1});
-ToDoList.addTask({title: 'Сходить в магазин за едой', priority: 3});
-ToDoList.addTask({title: 'Сходить на тренировку', priority: 2});
-ToDoList.addTask({title: 'Погулять по лесу', priority: 4});
-ToDoList.deleteTask(3);
-ToDoList.refreshTask(4, {title: 'Сходить на тренировку', priority: 9});
-ToDoList.sortTasks();
-console.log(ToDoList.tasks)
+const newTasks = {};
+let data = {
+    title: 'Новая для теста',
+    description: 'Тестовое описание',
+    order: 10,
+    priority: 10,
+};
+
+toDoList.addTask.call(newTasks, data);
+toDoList.addTask.bind(newTasks, {title: 'Решить 5 задач по JS', priority: 1, order: 1})();
+toDoList.addTask.apply(newTasks, [{title: 'Сходить на тренировку', priority: 2, order: 3}]);
+toDoList.addTask.apply(newTasks, [{title: 'Погулять по лесу', priority: 4, order: 4}]);
+console.log(newTasks.tasks);
+toDoList.deleteTask.call(newTasks, 4);
+console.log(newTasks.tasks);
+toDoList.refreshTask.apply(newTasks, [2, {title: 'Почитать книгу'}]);
+console.log(newTasks.tasks);
+toDoList.sortTasks.bind(newTasks)();
+console.log(newTasks.tasks);
